@@ -1,7 +1,7 @@
 import express, { Request, Response } from 'express';
-import { connectDB } from './db/connectDB';
+import { connectDB } from './db/connectDB.js';
 import dotenv from 'dotenv';
-import authRoutes from './routes/auth.route'
+import authRoutes from './routes/auth.route.js'
 
 dotenv.config();
 
