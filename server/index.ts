@@ -1,11 +1,13 @@
+import dotenv from 'dotenv';
 import express, { Request, Response } from 'express';
 import { connectDB } from './db/connectDB.js';
-import dotenv from 'dotenv';
-import authRoutes from './routes/auth.route.js'
+import authRoutes from './routes/auth.route.js';
 
 dotenv.config();
 
 const app = express();
+
+app.use(express.json());
 
 app.use('/api/auth', authRoutes)
 

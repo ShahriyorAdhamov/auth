@@ -1,5 +1,6 @@
 import bcryptjs from 'bcryptjs';
 import { Request, Response } from "express";
+import { sendWelcomeEmail } from '../mailtrap/emails.js';
 import { User } from "../models/auth.model.js";
 import { generateTokenAndSetCookie } from '../utils/generateTokenAndSetCookie.js';
 
@@ -33,7 +34,6 @@ export const signup = async (req: Request, res: Response): Promise<void> => {
 		});
 
 		await user.save();
-
 		generateTokenAndSetCookie(res, user._id);
 
 		res.status(201).json({
@@ -44,6 +44,8 @@ export const signup = async (req: Request, res: Response): Promise<void> => {
 				password: undefined,
 			},
 		});
+
+		await sendWelcomeEmail(user.email, user.name);
 	} catch (error: any) {
 		res.status(400).json({ success: false, message: error.message || "Something went wrong" });
 	}
